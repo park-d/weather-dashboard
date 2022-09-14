@@ -13,11 +13,45 @@
     <script src="https://code.jquery.com/jquery-3.6.1.min.js"
         integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/css/style.css">
-    <title>Weather App</title>
+    <title>Document</title>
 </head>
 
 <body>
-    <script src="./assets/js/script.js"></script>
+    <header class="mb-3 text-center">
+        <h1>Weather Dashboard</h1>
+    </header>
+
+    <div class="d-flex justify-content-center p-3">
+        <div class="d-flex row col-md-2 justify-content-center">
+            <form id="search-form">
+                <h2>Search for a City</h2>
+                <div class="mb-3">
+                    <input type="text" class="form-control" id="search-input" autocomplete="off" required>
+                </div>
+                <div id="all-buttons">
+                    <button class="btn btn-primary btn-block click" id="search-btn" type="submit">Search</button>
+                    <button class="btn btn-primary btn-block" id="clear-btn">Clear History</button>
+                    <hr style="height:10px">
+                </div>
+            </form>
+        </div>
+
+        <div class="d-flex flex-column col-md-10 p-4">
+            <div class=" card p-3 mb-3 current-weather hidden" id="current-weather">
+                <h3 id='search-city'><img></h3>
+                <p id="temp">Temperature: </p>
+                <p id="wind">Wind: </p>
+                <p id="humidity">Humidity: </p>
+            </div>
+
+            <h3 class="hidden" id="forecast-title">5-Day Forecast:</h3>
+
+            <div class="d-flex flex-wrap forecast justify-content-md-center justify-content-lg-between">
+            </div>
+
+            <script src="https://code.jquery.com/jquery-3.6.1.min.js"
+                integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+            <script src="./assets/js/script.js"></script>
 </body>
 
 </html>
