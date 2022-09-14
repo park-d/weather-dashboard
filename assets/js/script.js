@@ -35,7 +35,7 @@ function currentWeatherAPI(event) {
         })
         .then(function (data) {
             console.log(data);
-            //function call here
+            addCurrentData(data);
         });
 }
 
@@ -60,6 +60,24 @@ function forecastWeatherAPI(event) {
             console.log(data);
             //function call here
         });
+}
+
+// function to add the data from the API call to the html elements on screen
+function addCurrentData(data) {
+    //display main weather content div
+    let hiddenCurrent = $('#current-weather');
+    hiddenCurrent.removeClass('hidden');
+
+    // getting data and icon from API data to add to main weather ntent div
+    cityElement.text(`${data.name}`);
+    let icon = data.weather[0].icon;
+    let iconImg = $('<img>');
+    iconImg.attr('src', 'https://openweathermap.org/img/wn/' + icon + '.png');
+    cityElement.append(iconImg);
+
+    tempElement.text(`Temp: ${data.main.temp}${String.fromCharCode(176)}F`);
+    windElement.text(`Wind: ${data.wind.speed} MPH`);
+    humidityElement.text(`Humidity: ${data.main.humidity}%`);
 }
 
 fetchButton.click(currentWeatherAPI);
