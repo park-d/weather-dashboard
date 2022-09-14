@@ -25,3 +25,7 @@ While working on the Module-6 Challenge, I was in a study group with Jackson Myh
 ## License
 
 N/A
+
+## Notes
+
+Our instructor asked us to use the city url and display the data provided by the api url. UV index is not present in new free version of api, and the lat and lon values are also not working in url. We were asked to use the free APIs only and the free APIs do not have UV index.
