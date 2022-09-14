@@ -34,8 +34,33 @@ function currentWeatherAPI(event) {
             return response.json();
         })
         .then(function (data) {
-           console.log(data);
+            console.log(data);
+            //function call here
         });
 }
 
-fetchButton.click(currentWeatherAPI)
+// function to call 5 day 3 hour forecast database, & then runs the function below to add to html page, dynamic based on whether or not you click on history or new search
+function forecastWeatherAPI(event) {
+    event.preventDefault();
+    let requestUrl;
+    if(event.target.id === "search-btn") {
+        let searchLocation = searchElement.val();
+        if(searchLocation == '') {return;};
+        requestUrl = apiURL + `${forecastAPI}?q=${searchLocation}&appid=${apiKey}${unitsKey}`;
+    } else {
+        let searchLocation = event.target.innerText;
+        requestUrl = apiURL + `${forecastAPI}?q=${searchLocation}&appid=${apiKey}${unitsKey}`;
+    }
+
+    fetch(requestUrl)
+        .then(function (response) {
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            //function call here
+        });
+}
+
+fetchButton.click(currentWeatherAPI);
+fetchButton.click(forecastWeatherAPI);
