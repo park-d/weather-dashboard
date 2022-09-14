@@ -1,0 +1,12 @@
+header {
+    background-color: lightblue;
+    padding: 10px
+}
+
+h2 {
+    font-size: 28px;
+}
+
+.hidden {
+    display: none;
+}
