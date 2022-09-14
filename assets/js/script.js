@@ -28,16 +28,31 @@ function currentWeatherAPI(event) {
         if(searchLocation == '') {return;};
         requestUrl = apiURL + `${currentAPI}?q=${searchLocation}&appid=${apiKey}${unitsKey}`;
     } else {
+        searchElement.val('');
         let searchLocation = event.target.innerText;
         requestUrl = apiURL + `${currentAPI}?q=${searchLocation}&appid=${apiKey}${unitsKey}`;
     }
+    
     //api fetch & promise
     fetch(requestUrl)
         .then(function (response) {
-            return response.json();
+            if(response.ok) {
+                response.json()
+                    .then(function (data) {
+                        addCurrentData(data);
+                    });
+                // if city input is invalid remove all the data shown and clear the seach box and alert user
+            } else {
+                let hiddenCurrent = $('#current-weather');
+                hiddenCurrent.addClass('hidden');
+                let hiddenTitle = $('#forecast-title');
+                hiddenTitle.addClass('hidden');
+                searchElement.val('');
+                alert("Please enter valid city name");
+            }
         })
-        .then(function (data) {
-            addCurrentData(data);
+        .catch(function () {
+            alert("Unable to connect to Open Weather");
         });
 }
 
@@ -60,7 +75,7 @@ function forecastWeatherAPI(event) {
         })
         .then(function (data) {
             addForecastCards(data);
-
+            saveSearch();
         });
 }
 
@@ -162,7 +177,6 @@ historyButton.click(function (event) {
     } else if(event.target.id === 'search-btn') {
         currentWeatherAPI(event);
         forecastWeatherAPI(event);
-        saveSearch();
     } else {
         currentWeatherAPI(event);
         forecastWeatherAPI(event);
