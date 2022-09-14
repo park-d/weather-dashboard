@@ -10,3 +10,14 @@ h2 {
 .hidden {
     display: none;
 }
+
+.forecast-cards {
+    background-color: navy;
+    color: white;
+    border-radius: 10px;
+    border: solid lightgray 3px;
+}
+
+.history-button {
+    text-transform: capitalize;
+}

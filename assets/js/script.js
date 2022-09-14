@@ -15,6 +15,9 @@ let forecastAPI = 'forecast';
 let apiKey = 'bc1d5e6f407cb15f1035b7596c15a052';
 let unitsKey = '&units=imperial';
 
+// Storage varible
+let cityHistory = JSON.parse(localStorage.getItem("cityName")) || [];
+
 // function for current weather API & runs function to add data to screen, dynamic based on whether or not you click on history or new search
 function currentWeatherAPI(event) {
     event.preventDefault();
@@ -34,7 +37,6 @@ function currentWeatherAPI(event) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             addCurrentData(data);
         });
 }
@@ -57,7 +59,6 @@ function forecastWeatherAPI(event) {
             return response.json();
         })
         .then(function (data) {
-            console.log(data);
             addForecastCards(data);
 
         });
@@ -119,5 +120,60 @@ function addForecastCards(data) {
     }
 }
 
-fetchButton.click(currentWeatherAPI);
-fetchButton.click(forecastWeatherAPI);
+// function to save searches to a history as well as in local storage
+function saveSearch() {
+    // creating new buttons for the saved searches, selecting button section & search query
+    let historySection = $('#all-buttons');
+    let searchHistory = $("<btn class='btn btn-primary btn-block click history-button'>");
+    let searchLocation = searchElement.val();
+    // if the local storage is empty or the search already exists, stop the function, otherwise make a button and add the search input to the button and save to local storage
+    if(cityHistory.includes(searchLocation) || searchLocation == '') {
+        return;
+    } else {
+        searchHistory.text(searchLocation);
+        searchHistory.val(searchElement);
+        historySection.append(searchHistory);
+        cityHistory.push(searchLocation);
+        localStorage.setItem("cityName", JSON.stringify(cityHistory));
+        searchElement.val('');
+    }
+}
+
+// creates new buttons on screen based on local storage values when refreshing page
+function getCityHistory() {
+    let historyButton = $('#all-buttons');
+    if(cityHistory !== null) {
+        // looping through the length of the saved data and creating new buttons to display saved searches when user refreshes page
+        for(let i = 0; i < cityHistory.length; i++) {
+            let searchHistory = $("<btn class='btn btn-primary btn-block click history-button'>");
+            searchHistory.text([cityHistory[i]]);
+            searchHistory.val(cityHistory[i]);
+            historyButton.append(searchHistory);
+        }
+    }
+};
+
+//  click event to handle which buttons are being clicked on and which 
+let historyButton = $('#all-buttons');
+historyButton.click(function (event) {
+    let clickedElement = event.target;
+    if(!clickedElement.matches('.click')) {
+        return;
+    } else if(event.target.id === 'search-btn') {
+        currentWeatherAPI(event);
+        forecastWeatherAPI(event);
+        saveSearch();
+    } else {
+        currentWeatherAPI(event);
+        forecastWeatherAPI(event);
+    }
+});
+// run this function to get the search history buttons showing
+getCityHistory();
+
+// click event to clear history and empty the page
+clearButton.click(function (event) {
+    event.preventDefault();
+    localStorage.clear();
+    document.location.reload();
+});
