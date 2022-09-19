@@ -12,7 +12,7 @@ N/A
 
 ## Usage
 
-Application deployed at the following link: https://park-d.github.io/weather-dashboard-module6/
+Application deployed at the following link: https://park-d.github.io/weather-dashboard/
 
 When a user opens the page, they are presented with a header and a simple search box. When they type in a valid city name, they are presented with the current location, date, an icon of the current weather, temperature, wind, and humidity. They also receive a 5 day forecast with the same traits. When they search a city, it gets saved onto the browser for future use, and to recall after other searches. They can also clear their search history at any point. 
 
